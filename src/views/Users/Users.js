@@ -219,7 +219,7 @@ const cardChartOpts4 = {
 };
 
 
-class Dashboard extends Component {
+class Users extends Component {
     constructor(props) {
         super(props);
 
@@ -458,4 +458,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default Users;

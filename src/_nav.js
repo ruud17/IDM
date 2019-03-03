@@ -3,18 +3,18 @@ export default {
 
     {
       name: 'Users',
-      url: '/dashboard',
+      url: '/users',
       icon: 'icon-drop',
     },
-    {
-      name: 'Groups',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
-    },
-    {
-      name: 'Roles',
-      url: '/theme/typography',
-      icon: 'icon-pencil',
-    },
+    // {
+    //   name: 'Groups',
+    //   url: '/theme/typography',
+    //   icon: 'icon-pencil',
+    // },
+    // {
+    //   name: 'Roles',
+    //   url: '/theme/typography',
+    //   icon: 'icon-pencil',
+    // },
   ],
 };
