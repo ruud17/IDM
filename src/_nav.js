@@ -6,15 +6,15 @@ export default {
       url: '/users',
       icon: 'icon-drop',
     },
-    // {
-    //   name: 'Groups',
-    //   url: '/theme/typography',
-    //   icon: 'icon-pencil',
-    // },
-    // {
-    //   name: 'Roles',
-    //   url: '/theme/typography',
-    //   icon: 'icon-pencil',
-    // },
+    {
+      name: 'Roles',
+      url: '/roles',
+      icon: 'icon-pencil',
+    },
+    {
+      name: 'Groups',
+      url: '/groups',
+      icon: 'icon-pencil',
+    },
   ],
 };
