@@ -1,28 +1,19 @@
 import React, {Component, lazy, Suspense} from 'react';
 import {Bar, Line} from 'react-chartjs-2';
+import Select from 'react-select';
 import {
-    Badge,
-    Button,
-    ButtonDropdown,
-    ButtonGroup,
-    ButtonToolbar,
     Card,
     CardBody,
     CardFooter,
     CardHeader,
     CardTitle,
     Col,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Progress,
     Row,
     Table,
 } from 'reactstrap';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities'
-import {UsersService} from "../../services";
+import {GroupsService, RolesService, UsersService} from "../../services";
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
@@ -233,7 +224,10 @@ class Dashboard extends Component {
         super(props);
 
         this.state = {
-            users: []
+            users: [],
+            selectedUser: {},
+            groups: [],
+            roles: []
         };
 
 
@@ -241,6 +235,9 @@ class Dashboard extends Component {
 
     componentDidMount() {
         this.getUsers();
+        this.getGroups();
+        this.getRoles();
+
     }
 
 
@@ -248,15 +245,44 @@ class Dashboard extends Component {
         try {
             const response = await UsersService.get();
             this.setState({
-                users: Object.assign([], response.data)
+                users: Object.assign([], response.data),
+                selectedUser: Object.assign({}, response.data[0])
             })
         } catch (error) {
             console.error('error', error);
         }
     }
 
+    getGroups = async () => {
+        try {
+            const response = await GroupsService.get();
+            this.setState({
+                groups: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    getRoles = async () => {
+        try {
+            const response = await RolesService.get();
+            this.setState({
+                roles: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    selectUser = (user) => {
+        this.setState({
+            selectedUser: Object.assign({}, user)
+        })
+    }
+
     render() {
-        const {users} = this.state;
+        const {users, selectedUser, groups, roles} = this.state;
 
         return (
 
@@ -266,7 +292,6 @@ class Dashboard extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-primary">
                             <CardBody className="pb-0">
-
                                 <div className="text-value">{users.length}</div>
                                 <div>Total users</div>
                             </CardBody>
@@ -279,21 +304,7 @@ class Dashboard extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-warning">
                             <CardBody className="pb-0">
-                                <ButtonGroup className="float-right">
-                                    <Dropdown id='card3' isOpen={this.state.card3} toggle={() => {
-                                        this.setState({card3: !this.state.card3});
-                                    }}>
-                                        <DropdownToggle caret className="p-0" color="transparent">
-                                            <i className="icon-settings"></i>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem>Action</DropdownItem>
-                                            <DropdownItem>Another action</DropdownItem>
-                                            <DropdownItem>Something else here</DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
-                                </ButtonGroup>
-                                <div className="text-value">23</div>
+                                <div className="text-value">{groups.length}</div>
                                 <div>Total groups</div>
                             </CardBody>
                             <div className="chart-wrapper" style={{height: '70px'}}>
@@ -305,21 +316,7 @@ class Dashboard extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-danger">
                             <CardBody className="pb-0">
-                                <ButtonGroup className="float-right">
-                                    <ButtonDropdown id='card4' isOpen={this.state.card4} toggle={() => {
-                                        this.setState({card4: !this.state.card4});
-                                    }}>
-                                        <DropdownToggle caret className="p-0" color="transparent">
-                                            <i className="icon-settings"></i>
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <DropdownItem>Action</DropdownItem>
-                                            <DropdownItem>Another action</DropdownItem>
-                                            <DropdownItem>Something else here</DropdownItem>
-                                        </DropdownMenu>
-                                    </ButtonDropdown>
-                                </ButtonGroup>
-                                <div className="text-value">145</div>
+                                <div className="text-value">{roles.length}</div>
                                 <div>Total roles</div>
                             </CardBody>
                             <div className="chart-wrapper mx-3" style={{height: '70px'}}>
@@ -331,7 +328,7 @@ class Dashboard extends Component {
 
 
                 <Row>
-                    <Col>
+                    <Col xs="12" sm="6" lg="6">
                         <Card>
                             <CardHeader>
                                 Users
@@ -342,232 +339,88 @@ class Dashboard extends Component {
                                     <tr>
                                         <th className="text-center"><i className="icon-people"></i></th>
                                         <th>User</th>
-                                        <th className="text-center">Country</th>
-                                        <th>Usage</th>
-                                        <th className="text-center">Payment Method</th>
-                                        <th>Activity</th>
+                                        <th className="text-center">Username</th>
+                                        <th>Email</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/1.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-success"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Yiorgos Avraamu</div>
-                                            <div className="small text-muted">
-                                                <span>New</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-us h4 mb-0" title="us" id="us"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>50%</strong>
+                                    {users.map(user =>
+                                        <tr key={user.id}
+                                            className={selectedUser.id === user.id ? 'selected-user-row' : null}
+                                        onClick={()=> this.selectUser(user)}>
+                                            <td className="text-center">
+                                                <div className="avatar">
+                                                    <img src={'assets/img/avatars/1.jpg'} className="img-avatar"
+                                                         alt="admin@bootstrapmaster.com"/>
+                                                    <span className="avatar-status badge-success"></span>
                                                 </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
+                                            </td>
+                                            <td>
+                                                <div>{user.firstName || '-'} {user.lastName || '-'}</div>
+                                                <div className="small text-muted">
+                                                    Registered: {user.createDate}
                                                 </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="success" value="50"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-cc-mastercard" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>10 sec ago</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/2.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-danger"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Avram Tarasios</div>
-                                            <div className="small text-muted">
+                                            </td>
+                                            <td className="text-center">
+                                                {user.username || '-'}
+                                            </td>
+                                            <td>
+                                                {user.email || '-'}
+                                            </td>
+                                            {/*<i className="fa fa-remove fa-lg"></i>*/}
+                                        </tr>
+                                    )}
 
-                                                <span>Recurring</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-br h4 mb-0" title="br" id="br"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>10%</strong>
-                                                </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                                </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="info" value="10"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-cc-visa" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>5 minutes ago</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/3.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-warning"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Quintin Ed</div>
-                                            <div className="small text-muted">
-                                                <span>New</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-in h4 mb-0" title="in" id="in"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>74%</strong>
-                                                </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                                </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="warning" value="74"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-cc-stripe" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>1 hour ago</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/4.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-secondary"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Enéas Kwadwo</div>
-                                            <div className="small text-muted">
-                                                <span>New</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-fr h4 mb-0" title="fr" id="fr"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>98%</strong>
-                                                </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                                </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="danger" value="98"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-paypal" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>Last month</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/5.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-success"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Agapetus Tadeáš</div>
-                                            <div className="small text-muted">
-                                                <span>New</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-es h4 mb-0" title="es" id="es"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>22%</strong>
-                                                </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                                </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="info" value="22"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-google-wallet" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>Last week</strong>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-center">
-                                            <div className="avatar">
-                                                <img src={'assets/img/avatars/6.jpg'} className="img-avatar"
-                                                     alt="admin@bootstrapmaster.com"/>
-                                                <span className="avatar-status badge-danger"></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div>Friderik Dávid</div>
-                                            <div className="small text-muted">
-                                                <span>New</span> | Registered: Jan 1, 2015
-                                            </div>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="flag-icon flag-icon-pl h4 mb-0" title="pl" id="pl"></i>
-                                        </td>
-                                        <td>
-                                            <div className="clearfix">
-                                                <div className="float-left">
-                                                    <strong>43%</strong>
-                                                </div>
-                                                <div className="float-right">
-                                                    <small className="text-muted">Jun 11, 2015 - Jul 10, 2015</small>
-                                                </div>
-                                            </div>
-                                            <Progress className="progress-xs" color="success" value="43"/>
-                                        </td>
-                                        <td className="text-center">
-                                            <i className="fa fa-cc-amex" style={{fontSize: 24 + 'px'}}></i>
-                                        </td>
-                                        <td>
-                                            <div className="small text-muted">Last login</div>
-                                            <strong>Yesterday</strong>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </Table>
+                            </CardBody>
+                        </Card>
+                    </Col>
+
+                    <Col xs="12" sm="6" lg="6">
+                        <Card>
+                            <CardHeader>
+                                Edit user
+                            </CardHeader>
+                            <CardBody>
+                                <div className="card">
+                                    <div className="card-header"><strong>{selectedUser.username}</strong>
+                                    </div>
+                                    <div className="card-body">
+                                        {/*<div className="row">*/}
+                                        {/*<div className="col-12">*/}
+                                        {/*<div className="position-relative form-group">*/}
+                                        {/*<label htmlFor="name" className="">Name</label>*/}
+                                        {/*<input id="name" placeholder="Enter your name" required=""*/}
+                                        {/*type="text" className="form-control" disabled value="test"/>*/}
+                                        {/*</div>*/}
+                                        {/*</div>*/}
+                                        {/*</div>*/}
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="roles" className="">Roles</label>
+                                                    <Select
+                                                        value={selectedUser}
+                                                        onChange={this.handleChange}
+                                                        options={groups}
+                                                    /></div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="groups" className="">Groups</label>
+                                                    <Select
+                                                        value={selectedUser}
+                                                        onChange={this.handleChange}
+                                                        options={roles}
+                                                    /></div>
+                                            </div>
+                                        </div>
+                                        <small>Changes are automatically saved</small>
+                                    </div>
+                                </div>
                             </CardBody>
                         </Card>
                     </Col>
