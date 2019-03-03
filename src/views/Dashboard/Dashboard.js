@@ -226,20 +226,18 @@ class Dashboard extends Component {
         this.state = {
             users: [],
             selectedUser: {},
+            selectedUserGroups: [],
+            selectedUserRoles: [],
             groups: [],
             roles: []
         };
-
-
     }
 
     componentDidMount() {
         this.getUsers();
         this.getGroups();
         this.getRoles();
-
     }
-
 
     getUsers = async () => {
         try {
@@ -281,8 +279,20 @@ class Dashboard extends Component {
         })
     }
 
+    updateUserRoles = (allRoles, selectedRole) => {
+        this.setState(prevState => ({
+            selectedUserRoles: [...prevState.selectedUserRoles, selectedRole]
+        }))
+    }
+
+    updateUserGroups = (allGroups, selectedgGroup) => {
+        this.setState(prevState => ({
+            selectedUserGroups: [...prevState.selectedUserGroups, selectedgGroup]
+        }))
+    }
+
     render() {
-        const {users, selectedUser, groups, roles} = this.state;
+        const {users, selectedUser, groups, roles, selectedUserGroups, selectedUserRoles} = this.state;
 
         return (
 
@@ -347,7 +357,7 @@ class Dashboard extends Component {
                                     {users.map(user =>
                                         <tr key={user.id}
                                             className={selectedUser.id === user.id ? 'selected-user-row' : null}
-                                        onClick={()=> this.selectUser(user)}>
+                                            onClick={() => this.selectUser(user)}>
                                             <td className="text-center">
                                                 <div className="avatar">
                                                     <img src={'assets/img/avatars/1.jpg'} className="img-avatar"
@@ -401,9 +411,12 @@ class Dashboard extends Component {
                                                 <div className="position-relative form-group">
                                                     <label htmlFor="roles" className="">Roles</label>
                                                     <Select
-                                                        value={selectedUser}
-                                                        onChange={this.handleChange}
-                                                        options={groups}
+                                                        value={selectedUserRoles}
+                                                        onChange={(item, opt) => this.updateUserRoles(item, opt.option)}
+                                                        options={roles}
+                                                        getOptionValue={(item) => item.id}
+                                                        getOptionLabel={(item) => item.name}
+                                                        isMulti
                                                     /></div>
                                             </div>
                                         </div>
@@ -412,13 +425,27 @@ class Dashboard extends Component {
                                                 <div className="position-relative form-group">
                                                     <label htmlFor="groups" className="">Groups</label>
                                                     <Select
-                                                        value={selectedUser}
-                                                        onChange={this.handleChange}
-                                                        options={roles}
+                                                        value={selectedUserGroups}
+                                                        onChange={(item, opt) => this.updateUserGroups(item, opt.option)}
+                                                        options={groups}
+                                                        getOptionValue={(item) => item.id}
+                                                        getOptionLabel={(item) => item.name}
+                                                        isMulti
                                                     /></div>
                                             </div>
                                         </div>
-                                        <small>Changes are automatically saved</small>
+                                        <div className="row">
+                                            <div className="col-4">
+                                                <small>Changes are automatically saved</small>
+                                            </div>
+                                            <div className="col-8">
+                                                <div className="position-relative form-group col-4 float-md-right p-0">
+                                                    <button aria-pressed="true"
+                                                            className="btn btn-danger btn-block active">Delete user
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </CardBody>

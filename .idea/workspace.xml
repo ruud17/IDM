@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d14b442-1923-4036-96ab-5d94a6d908f8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scss/_custom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/scss/_custom.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/Dashboard.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,8 +18,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Dashboard/Dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="279" column="48" selection-start-line="279" selection-start-column="48" selection-end-line="279" selection-end-column="48" />
+            <state relative-caret-position="15">
+              <caret line="227" column="24" selection-start-line="227" selection-start-column="24" selection-end-line="227" selection-end-column="24" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
                 <element signature="e#891#1158#0" />
@@ -96,7 +91,7 @@
         <entry file="file://$PROJECT_DIR$/src/services/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
-              <caret line="2" column="40" lean-forward="true" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+              <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -232,12 +227,12 @@
       <option name="presentableId" value="Default" />
       <updated>1551460336273</updated>
       <workItem from="1551460337612" duration="1729000" />
-      <workItem from="1551546636522" duration="12120000" />
+      <workItem from="1551546636522" duration="17086000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13849000" />
+    <option name="totallyTimeSpent" value="18815000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="962" extended-state="0" />
@@ -291,13 +286,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/views/Dashboard/Dashboard.js</url>
-          <line>288</line>
+          <line>298</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/views/Dashboard/Dashboard.js</url>
-          <line>372</line>
+          <line>382</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
@@ -459,7 +454,7 @@
     <entry file="file://$PROJECT_DIR$/src/services/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="40" lean-forward="true" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -484,8 +479,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Dashboard/Dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="279" column="48" selection-start-line="279" selection-start-column="48" selection-end-line="279" selection-end-column="48" />
+        <state relative-caret-position="15">
+          <caret line="227" column="24" selection-start-line="227" selection-start-column="24" selection-end-line="227" selection-end-column="24" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
             <element signature="e#891#1158#0" />
