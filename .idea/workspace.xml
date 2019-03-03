@@ -2,14 +2,39 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d14b442-1923-4036-96ab-5d94a6d908f8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/Groups/Groups.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Groups/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Roles/Roles.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Roles/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_nav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/BrandButtons/BrandButtons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/BrandButtons/BrandButtons.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/BrandButtons/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonDropdowns/ButtonDropdowns.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonDropdowns/ButtonDropdowns.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonDropdowns/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonGroups/ButtonGroups.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonGroups/ButtonGroups.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/ButtonGroups/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/Buttons/Buttons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/Buttons/Buttons.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/Buttons/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Buttons/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Charts/Charts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Charts/Charts.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Charts/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Alerts/Alerts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Alerts/Alerts.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Alerts/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Badges/Badges.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Badges/Badges.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Badges/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Modals/Modals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Modals/Modals.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/Modals/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Notifications/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Colors/Colors.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Colors/Colors.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Colors/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Typography/Typography.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Typography/Typography.test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/Typography/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Theme/index.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -63,8 +88,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/Groups/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+            <state relative-caret-position="90">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -168,6 +193,7 @@
       <find>sygnet</find>
       <find>Breadcrumbs</find>
       <find>Users</find>
+      <find>Widget03</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -268,34 +294,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Groups" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Roles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Users" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
-              <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="Widgets" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -350,11 +348,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22108000" />
+    <option name="totallyTimeSpent" value="22369000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="962" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21760097" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -687,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Groups/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
