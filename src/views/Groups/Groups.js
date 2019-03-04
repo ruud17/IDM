@@ -397,7 +397,7 @@ class Groups extends Component {
                             <CardHeader>
                                 Groups
                                 <button className="btn btn-outline-primary btn-block btn-sm col-2 float-right"
-                                        onClick={this.addNewRole}>Add new</button>
+                                        onClick={this.addNewGroup}>Add new</button>
                             </CardHeader>
                             <CardBody>
                                 <Table hover responsive className="table-outline mb-0 d-none d-sm-table">

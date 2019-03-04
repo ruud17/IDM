@@ -109,8 +109,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/views/Groups/Groups.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="479">
-                  <caret line="416" column="91" selection-start-line="416" selection-start-column="91" selection-end-line="416" selection-end-column="91" />
+                <state relative-caret-position="619">
+                  <caret line="399" column="65" selection-start-line="399" selection-start-column="65" selection-end-line="399" selection-end-column="65" />
                   <folding>
                     <element signature="e#0#55#0" expanded="true" />
                     <element signature="e#601#906#0" />
@@ -342,7 +342,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37698000" />
+    <option name="totallyTimeSpent" value="37792000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-139" y="-1057" width="1920" height="1057" extended-state="6" />
@@ -700,8 +700,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Groups/Groups.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="416" column="91" selection-start-line="416" selection-start-column="91" selection-end-line="416" selection-end-column="91" />
+        <state relative-caret-position="619">
+          <caret line="399" column="65" selection-start-line="399" selection-start-column="65" selection-end-line="399" selection-end-column="65" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
             <element signature="e#601#906#0" />
