@@ -300,7 +300,7 @@ class Users extends Component {
         })
     }
 
-    deleteUser = async ()=>{
+    deleteUser = async () => {
         try {
             const response = await UsersService.delete(this.state.selectedUser.id);
             this.getUsers();
@@ -309,18 +309,46 @@ class Users extends Component {
         }
     }
 
-    addUserRole = async (allRoles, selectedRole)=>{
+    addUserRole = async (allRoles, selectedRole) => {
+        console.log('clicked', allRoles, selectedRole);
+        let userRoleIdsBeforeDeleting = this.state.selectedUserRoles.map(a => a.id);
+        let userRoleIdsAfterDeleting = allRoles.map(a => a.id);
+        let removedRoleId = userRoleIdsBeforeDeleting.filter(x => !userRoleIdsAfterDeleting.includes(x));
+        console.log('val', userRoleIdsBeforeDeleting, userRoleIdsAfterDeleting, removedRoleId);
         try {
-            const response = await UsersService.addUserRole(this.state.selectedUser.id, selectedRole);
+            if (selectedRole === undefined) { // role has been deleted
+                // get deleted role id
+                const response = await UsersService.deleteUserRole(this.state.selectedUser.id, removedRoleId);
+            } else {
+                const response = await UsersService.addUserRole(this.state.selectedUser.id, selectedRole);
+            }
             this.getUserRoles(this.state.selectedUser.id);
         } catch (error) {
             console.error('error', error);
         }
     }
 
-    addUserGroup = async (allGroups, selectedGroup)=>{
+    addUserGroup = async (allGroups, selectedGroup) => {
         try {
             const response = await UsersService.addUserGroup(this.state.selectedUser.id, selectedGroup);
+            this.getUserGroups(this.state.selectedUser.id);
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    removeUserRole = async (allRoles, selectedRole) => { //check if two params
+        try {
+            const response = await UsersService.deleteUserRole(this.state.selectedUser.id, selectedRole.id);
+            this.getUserRoles(this.state.selectedUser.id);
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    removeUserGroup = async (allGroups, selectedGroup) => {
+        try {
+            const response = await UsersService.deleteUserGroup(this.state.selectedUser.id, selectedGroup);
             this.getUserGroups(this.state.selectedUser.id);
         } catch (error) {
             console.error('error', error);
@@ -470,7 +498,8 @@ class Users extends Component {
                                             <div className="col-8">
                                                 <div className="position-relative form-group col-3 float-md-right p-0">
                                                     <button aria-pressed="true"
-                                                            className="btn btn-danger btn-block btn-sm" onClick={this.deleteUser}>Delete
+                                                            className="btn btn-danger btn-block btn-sm"
+                                                            onClick={this.deleteUser}>Delete
                                                     </button>
                                                 </div>
                                             </div>

@@ -9,7 +9,7 @@ export default class {
     static getUserGroups = (id) => API.get(`/users/${id}/groups`);
 
     static addUserRole = (id, role) => API.post(`/users/${id}/roles`, role);
-    static removeUserRole = (id, roleId) => API.delete(`/users/${id}/roles/${roleId}`);
+    static deleteUserRole = (id, roleId) => API.delete(`/users/${id}/roles/${roleId}`);
 
     static addUserGroup = (id, userId) => API.post(`/groups/${id}/members?userId=${userId}`); // id of group
     static deleteUserGroup = (id, userId) => API.delete(`/groups/${id}/members?userId=${userId}`);

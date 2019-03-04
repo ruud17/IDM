@@ -227,7 +227,7 @@ class Groups extends Component {
             groups: [],
             services: [],
             selectedGroup: emptyGroupObj,
-           // selectedGroupUsers: [],
+            // selectedGroupUsers: [],
 
         };
     }
@@ -322,7 +322,8 @@ class Groups extends Component {
         const {selectedGroup} = this.state;
         let groupObj = {
             "name": selectedGroup.name,
-            "serviceId": selectedGroup.service.id
+            "serviceId": selectedGroup.service.id,
+            "accountId": "9ff6e2fa-d0c6-481a-8513-45023cf7b881" // for demo purpose
         }
         if (selectedGroup.id) { // edit
             groupObj.id = selectedGroup.id;
