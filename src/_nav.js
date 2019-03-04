@@ -4,17 +4,17 @@ export default {
     {
       name: 'Users',
       url: '/users',
-      icon: 'icon-drop',
+      icon: 'icon-user',
     },
     {
       name: 'Roles',
       url: '/roles',
-      icon: 'icon-pencil',
+      icon: 'icon-list',
     },
     {
       name: 'Groups',
       url: '/groups',
-      icon: 'icon-pencil',
+      icon: 'icon-layers',
     },
   ],
 };

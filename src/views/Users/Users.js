@@ -4,9 +4,7 @@ import Select from 'react-select';
 import {
     Card,
     CardBody,
-    CardFooter,
     CardHeader,
-    CardTitle,
     Col,
     Row,
     Table,
@@ -15,13 +13,9 @@ import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities'
 import {GroupsService, RolesService, UsersService} from "../../services";
 
-const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
 
 const brandPrimary = getStyle('--primary')
-const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
-const brandWarning = getStyle('--warning')
-const brandDanger = getStyle('--danger')
 
 // Card Chart 1
 const cardChartData1 = {
@@ -79,7 +73,6 @@ const cardChartOpts1 = {
         },
     }
 }
-
 
 // Card Chart 2
 const cardChartData2 = {
@@ -302,8 +295,9 @@ class Users extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-primary">
                             <CardBody className="pb-0">
-                                <div className="text-value">{users.length}</div>
-                                <div>Total users</div>
+                                <div className="text-value">
+                                    <small>Total users:</small>
+                                    {users.length}</div>
                             </CardBody>
                             <div className="chart-wrapper mx-3" style={{height: '70px'}}>
                                 <Line data={cardChartData1} options={cardChartOpts1} height={70}/>
@@ -312,30 +306,31 @@ class Users extends Component {
                     </Col>
 
                     <Col xs="12" sm="4" lg="4">
-                        <Card className="text-white bg-warning">
-                            <CardBody className="pb-0">
-                                <div className="text-value">{groups.length}</div>
-                                <div>Total groups</div>
-                            </CardBody>
-                            <div className="chart-wrapper" style={{height: '70px'}}>
-                                <Line data={cardChartData3} options={cardChartOpts3} height={70}/>
-                            </div>
-                        </Card>
-                    </Col>
-
-                    <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-danger">
                             <CardBody className="pb-0">
-                                <div className="text-value">{roles.length}</div>
-                                <div>Total roles</div>
+                                <div className="text-value">
+                                    <small>Total roles:</small>
+                                    {roles.length}</div>
                             </CardBody>
                             <div className="chart-wrapper mx-3" style={{height: '70px'}}>
                                 <Bar data={cardChartData4} options={cardChartOpts4} height={70}/>
                             </div>
                         </Card>
                     </Col>
-                </Row>
 
+                    <Col xs="12" sm="4" lg="4">
+                        <Card className="text-white bg-warning">
+                            <CardBody className="pb-0">
+                                <div className="text-value">
+                                    <small>Total groups:</small>
+                                    {groups.length}</div>
+                            </CardBody>
+                            <div className="chart-wrapper" style={{height: '70px'}}>
+                                <Line data={cardChartData3} options={cardChartOpts3} height={70}/>
+                            </div>
+                        </Card>
+                    </Col>
+                </Row>
 
                 <Row>
                     <Col xs="12" sm="6" lg="6">
@@ -397,15 +392,6 @@ class Users extends Component {
                                     <div className="card-header"><strong>{selectedUser.username}</strong>
                                     </div>
                                     <div className="card-body">
-                                        {/*<div className="row">*/}
-                                        {/*<div className="col-12">*/}
-                                        {/*<div className="position-relative form-group">*/}
-                                        {/*<label htmlFor="name" className="">Name</label>*/}
-                                        {/*<input id="name" placeholder="Enter your name" required=""*/}
-                                        {/*type="text" className="form-control" disabled value="test"/>*/}
-                                        {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*</div>*/}
                                         <div className="row">
                                             <div className="col-12">
                                                 <div className="position-relative form-group">
@@ -436,12 +422,12 @@ class Users extends Component {
                                         </div>
                                         <div className="row">
                                             <div className="col-4">
-                                                <small>Changes are automatically saved</small>
+                                                <small className="text-info">Changes are automatically saved</small>
                                             </div>
                                             <div className="col-8">
-                                                <div className="position-relative form-group col-4 float-md-right p-0">
+                                                <div className="position-relative form-group col-3 float-md-right p-0">
                                                     <button aria-pressed="true"
-                                                            className="btn btn-danger btn-block active">Delete user
+                                                            className="btn btn-danger btn-block active btn-sm">Delete
                                                     </button>
                                                 </div>
                                             </div>
@@ -453,8 +439,7 @@ class Users extends Component {
                     </Col>
                 </Row>
             </div>
-        )
-            ;
+        );
     }
 }
 
