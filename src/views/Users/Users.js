@@ -309,49 +309,40 @@ class Users extends Component {
         }
     }
 
-    addUserRole = async (allRoles, selectedRole) => {
-        console.log('clicked', allRoles, selectedRole);
-        let userRoleIdsBeforeDeleting = this.state.selectedUserRoles.map(a => a.id);
-        let userRoleIdsAfterDeleting = allRoles.map(a => a.id);
-        let removedRoleId = userRoleIdsBeforeDeleting.filter(x => !userRoleIdsAfterDeleting.includes(x));
-        console.log('val', userRoleIdsBeforeDeleting, userRoleIdsAfterDeleting, removedRoleId);
-        try {
-            if (selectedRole === undefined) { // role has been deleted
-                // get deleted role id
-                const response = await UsersService.deleteUserRole(this.state.selectedUser.id, removedRoleId);
-            } else {
-                const response = await UsersService.addUserRole(this.state.selectedUser.id, selectedRole);
+    updateUserRole = async (allRoles, selectedRole) => {
+        debugger;
+        if (selectedRole.action === 'select-option') { //add
+            try {
+                const response = await UsersService.addUserRole(this.state.selectedUser.id, selectedRole.option);
+                this.getUserRoles(this.state.selectedUser.id);
+            } catch (error) {
+                console.error('error', error);
             }
-            this.getUserRoles(this.state.selectedUser.id);
-        } catch (error) {
-            console.error('error', error);
+        }else if (selectedRole.action === 'remove-value') { // remove
+            try {
+                const response = await UsersService.deleteUserRole(this.state.selectedUser.id, selectedRole.removedValue.id);
+                this.getUserRoles(this.state.selectedUser.id);
+            } catch (error) {
+                console.error('error', error);
+            }
         }
     }
 
-    addUserGroup = async (allGroups, selectedGroup) => {
-        try {
-            const response = await UsersService.addUserGroup(this.state.selectedUser.id, selectedGroup);
-            this.getUserGroups(this.state.selectedUser.id);
-        } catch (error) {
-            console.error('error', error);
-        }
-    }
-
-    removeUserRole = async (allRoles, selectedRole) => { //check if two params
-        try {
-            const response = await UsersService.deleteUserRole(this.state.selectedUser.id, selectedRole.id);
-            this.getUserRoles(this.state.selectedUser.id);
-        } catch (error) {
-            console.error('error', error);
-        }
-    }
-
-    removeUserGroup = async (allGroups, selectedGroup) => {
-        try {
-            const response = await UsersService.deleteUserGroup(this.state.selectedUser.id, selectedGroup);
-            this.getUserGroups(this.state.selectedUser.id);
-        } catch (error) {
-            console.error('error', error);
+    updateUserGroup = async (allGroups, selectedGroup) => {
+        if (selectedGroup.action === 'select-option') { //add
+            try {
+                const response = await UsersService.addUserGroup(selectedGroup.option.id, this.state.selectedUser.id);
+                this.getUserGroups(this.state.selectedUser.id);
+            } catch (error) {
+                console.error('error', error);
+            }
+        }else if (selectedGroup.action === 'remove-value') { // remove
+            try {
+                const response = await UsersService.deleteUserGroup(selectedGroup.removedValue.id, this.state.selectedUser.id);
+                this.getUserGroups(this.state.selectedUser.id);
+            } catch (error) {
+                console.error('error', error);
+            }
         }
     }
 
@@ -469,7 +460,7 @@ class Users extends Component {
                                                     <label htmlFor="roles" className="">Roles</label>
                                                     <Select
                                                         value={selectedUserRoles}
-                                                        onChange={(item, opt) => this.addUserRole(item, opt.option)}
+                                                        onChange={(item, opt) => this.updateUserRole(item, opt)}
                                                         options={roles}
                                                         getOptionValue={(item) => item.id}
                                                         getOptionLabel={(item) => item.name}
@@ -483,7 +474,7 @@ class Users extends Component {
                                                     <label htmlFor="groups" className="">Groups</label>
                                                     <Select
                                                         value={selectedUserGroups}
-                                                        onChange={(item, opt) => this.addUserGroup(item, opt.option)}
+                                                        onChange={(item, opt) => this.updateUserGroup(item, opt)}
                                                         options={groups}
                                                         getOptionValue={(item) => item.id}
                                                         getOptionLabel={(item) => item.name}
