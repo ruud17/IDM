@@ -235,6 +235,10 @@ class Users extends Component {
     getUsers = async () => {
         try {
             const response = await UsersService.get();
+            console.log('response', response);
+            this.getUserRoles(response.data[0].id); // mark first user
+            this.getUserGroups(response.data[0].id);
+
             this.setState({
                 users: Object.assign([], response.data),
                 selectedUser: Object.assign({}, response.data[0])
@@ -266,22 +270,61 @@ class Users extends Component {
         }
     }
 
+    getUserRoles = async (id) => {
+        try {
+            const response = await UsersService.getUserRoles(id);
+            this.setState({
+                selectedUserRoles: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    getUserGroups = async (id) => {
+        try {
+            const response = await UsersService.getUserGroups(id);
+            this.setState({
+                selectedUserGroups: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
     selectUser = (user) => {
+        this.getUserRoles(user.id);
+        this.getUserGroups(user.id);
         this.setState({
             selectedUser: Object.assign({}, user)
         })
     }
 
-    updateUserRoles = (allRoles, selectedRole) => {
-        this.setState(prevState => ({
-            selectedUserRoles: [...prevState.selectedUserRoles, selectedRole]
-        }))
+    deleteUser = async ()=>{
+        try {
+            const response = await UsersService.delete(this.state.selectedUser.id);
+            this.getUsers();
+        } catch (error) {
+            console.error('error', error);
+        }
     }
 
-    updateUserGroups = (allGroups, selectedgGroup) => {
-        this.setState(prevState => ({
-            selectedUserGroups: [...prevState.selectedUserGroups, selectedgGroup]
-        }))
+    addUserRole = async (allRoles, selectedRole)=>{
+        try {
+            const response = await UsersService.addUserRole(this.state.selectedUser.id, selectedRole);
+            this.getUserRoles(this.state.selectedUser.id);
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    addUserGroup = async (allGroups, selectedGroup)=>{
+        try {
+            const response = await UsersService.addUserGroup(this.state.selectedUser.id, selectedGroup);
+            this.getUserGroups(this.state.selectedUser.id);
+        } catch (error) {
+            console.error('error', error);
+        }
     }
 
     render() {
@@ -398,7 +441,7 @@ class Users extends Component {
                                                     <label htmlFor="roles" className="">Roles</label>
                                                     <Select
                                                         value={selectedUserRoles}
-                                                        onChange={(item, opt) => this.updateUserRoles(item, opt.option)}
+                                                        onChange={(item, opt) => this.addUserRole(item, opt.option)}
                                                         options={roles}
                                                         getOptionValue={(item) => item.id}
                                                         getOptionLabel={(item) => item.name}
@@ -412,7 +455,7 @@ class Users extends Component {
                                                     <label htmlFor="groups" className="">Groups</label>
                                                     <Select
                                                         value={selectedUserGroups}
-                                                        onChange={(item, opt) => this.updateUserGroups(item, opt.option)}
+                                                        onChange={(item, opt) => this.addUserGroup(item, opt.option)}
                                                         options={groups}
                                                         getOptionValue={(item) => item.id}
                                                         getOptionLabel={(item) => item.name}
@@ -427,7 +470,7 @@ class Users extends Component {
                                             <div className="col-8">
                                                 <div className="position-relative form-group col-3 float-md-right p-0">
                                                     <button aria-pressed="true"
-                                                            className="btn btn-danger btn-block btn-sm">Delete
+                                                            className="btn btn-danger btn-block btn-sm" onClick={this.deleteUser}>Delete
                                                     </button>
                                                 </div>
                                             </div>

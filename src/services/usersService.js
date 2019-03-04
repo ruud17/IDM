@@ -5,6 +5,8 @@ export default class {
     static get = () => API.get('/users');
     static delete = (id) => API.delete(`/users/${id}`);
 
+    static getUserRoles = (id) => API.get(`/users/${id}/roles`);
+    static getUserGroups = (id) => API.get(`/users/${id}/groups`);
 
     static addUserRole = (id, role) => API.post(`/users/${id}/roles`, role);
     static removeUserRole = (id, roleId) => API.delete(`/users/${id}/roles/${roleId}`);
