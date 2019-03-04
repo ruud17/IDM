@@ -218,7 +218,7 @@ class Groups extends Component {
 
         this.state = {
             users: [],
-            selectedUser: {},
+            selectedGroup: {},
             selectedUserGroups: [],
             selectedUserRoles: [],
             groups: [],
@@ -266,7 +266,7 @@ class Groups extends Component {
         }
     }
 
-    selectUser = (user) => {
+    selectGroup = (user) => {
         this.setState({
             selectedUser: Object.assign({}, user)
         })
@@ -285,7 +285,7 @@ class Groups extends Component {
     }
 
     render() {
-        const {users, selectedUser, groups, roles, selectedUserGroups, selectedUserRoles} = this.state;
+        const {users, selectedGroup, groups, roles, selectedUserGroups, selectedUserRoles} = this.state;
 
         return (
 
@@ -336,37 +336,27 @@ class Groups extends Component {
                                 <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                                     <thead className="thead-light">
                                     <tr>
-                                        <th className="text-center"><i className="icon-people"></i></th>
-                                        <th>User</th>
-                                        <th className="text-center">Username</th>
-                                        <th>Email</th>
+                                        <th className="text-center"><i className="icon-list"></i></th>
+                                        <th>Role</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {users.map(user =>
-                                        <tr key={user.id}
-                                            className={selectedUser.id === user.id ? 'selected-user-row' : null}
-                                            onClick={() => this.selectUser(user)}>
+                                    {groups.map(group =>
+                                        <tr key={group.id}
+                                            className={selectedGroup.id === group.id ? 'selected-user-row' : null}
+                                            onClick={() => this.selectedGroup(group)}>
                                             <td className="text-center">
                                                 <div className="avatar">
                                                     <img src={'assets/img/avatars/1.jpg'} className="img-avatar"
                                                          alt="admin@bootstrapmaster.com"/>
-                                                    <span className="avatar-status badge-success"></span>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div>{user.firstName || '-'} {user.lastName || '-'}</div>
+                                                <div>{group.name || '-'}</div>
                                                 <div className="small text-muted">
-                                                    Registered: {user.createDate}
+                                                    Id: {group.id}
                                                 </div>
                                             </td>
-                                            <td className="text-center">
-                                                {user.username || '-'}
-                                            </td>
-                                            <td>
-                                                {user.email || '-'}
-                                            </td>
-                                            {/*<i className="fa fa-remove fa-lg"></i>*/}
                                         </tr>
                                     )}
 
@@ -379,55 +369,55 @@ class Groups extends Component {
                     <Col xs="12" sm="6" lg="6">
                         <Card>
                             <CardHeader>
-                                Edit user
+                                Add group
                             </CardHeader>
-                            <CardBody>
-                                <div className="card">
-                                    <div className="card-header"><strong>{selectedUser.username}</strong>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="position-relative form-group">
-                                                    <label htmlFor="roles" className="">Roles</label>
-                                                    <Select
-                                                        value={selectedUserRoles}
-                                                        onChange={(item, opt) => this.updateUserRoles(item, opt.option)}
-                                                        options={roles}
-                                                        getOptionValue={(item) => item.id}
-                                                        getOptionLabel={(item) => item.name}
-                                                        isMulti
-                                                    /></div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="position-relative form-group">
-                                                    <label htmlFor="groups" className="">Groups</label>
-                                                    <Select
-                                                        value={selectedUserGroups}
-                                                        onChange={(item, opt) => this.updateUserGroups(item, opt.option)}
-                                                        options={groups}
-                                                        getOptionValue={(item) => item.id}
-                                                        getOptionLabel={(item) => item.name}
-                                                        isMulti
-                                                    /></div>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-4">
-                                                <small className="text-info">Changes are automatically saved</small>
-                                            </div>
-                                            <div className="col-8">
-                                                <div className="position-relative form-group col-3 float-md-right p-0">
-                                                    <button aria-pressed="true" className="btn btn-danger btn-block active btn-sm">Delete
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </CardBody>
+                            {/*<CardBody>*/}
+                                {/*<div className="card">*/}
+                                    {/*<div className="card-header"><strong>{selectedUser.username}</strong>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="card-body">*/}
+                                        {/*<div className="row">*/}
+                                            {/*<div className="col-12">*/}
+                                                {/*<div className="position-relative form-group">*/}
+                                                    {/*<label htmlFor="roles" className="">Roles</label>*/}
+                                                    {/*<Select*/}
+                                                        {/*value={selectedUserRoles}*/}
+                                                        {/*onChange={(item, opt) => this.updateUserRoles(item, opt.option)}*/}
+                                                        {/*options={roles}*/}
+                                                        {/*getOptionValue={(item) => item.id}*/}
+                                                        {/*getOptionLabel={(item) => item.name}*/}
+                                                        {/*isMulti*/}
+                                                    {/*/></div>*/}
+                                            {/*</div>*/}
+                                        {/*</div>*/}
+                                        {/*<div className="row">*/}
+                                            {/*<div className="col-12">*/}
+                                                {/*<div className="position-relative form-group">*/}
+                                                    {/*<label htmlFor="groups" className="">Groups</label>*/}
+                                                    {/*<Select*/}
+                                                        {/*value={selectedUserGroups}*/}
+                                                        {/*onChange={(item, opt) => this.updateUserGroups(item, opt.option)}*/}
+                                                        {/*options={groups}*/}
+                                                        {/*getOptionValue={(item) => item.id}*/}
+                                                        {/*getOptionLabel={(item) => item.name}*/}
+                                                        {/*isMulti*/}
+                                                    {/*/></div>*/}
+                                            {/*</div>*/}
+                                        {/*</div>*/}
+                                        {/*<div className="row">*/}
+                                            {/*<div className="col-4">*/}
+                                                {/*<small className="text-info">Changes are automatically saved</small>*/}
+                                            {/*</div>*/}
+                                            {/*<div className="col-8">*/}
+                                                {/*<div className="position-relative form-group col-3 float-md-right p-0">*/}
+                                                    {/*<button aria-pressed="true" className="btn btn-danger btn-block active btn-sm">Delete*/}
+                                                    {/*</button>*/}
+                                                {/*</div>*/}
+                                            {/*</div>*/}
+                                        {/*</div>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</CardBody>*/}
                         </Card>
                     </Col>
                 </Row>

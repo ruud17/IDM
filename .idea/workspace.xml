@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d14b442-1923-4036-96ab-5d94a6d908f8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/_nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_nav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Roles/Roles.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Roles/Roles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Groups/Groups.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Groups/Groups.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,11 +15,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/Roles/Roles.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="355" column="91" selection-start-line="355" selection-start-column="91" selection-end-line="355" selection-end-column="91" />
+            <state relative-caret-position="334">
+              <caret line="346" column="41" lean-forward="true" selection-start-line="343" selection-start-column="36" selection-end-line="346" selection-end-column="41" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
                 <element signature="e#583#888#0" />
@@ -32,6 +31,19 @@
                 <element signature="e#4258#4599#0" />
                 <element signature="e#4625#4998#0" />
                 <element signature="e#7024#9072#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/Groups/Groups.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="583">
+              <caret line="373" column="28" selection-start-line="373" selection-start-column="31" selection-end-line="419" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#55#0" expanded="true" />
+                <element signature="e#7025#8854#0" />
               </folding>
             </state>
           </provider>
@@ -110,9 +122,9 @@
         <option value="$PROJECT_DIR$/src/views/index.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
         <option value="$PROJECT_DIR$/src/views/Users/Users.js" />
-        <option value="$PROJECT_DIR$/src/views/Groups/Groups.js" />
         <option value="$PROJECT_DIR$/src/_nav.js" />
         <option value="$PROJECT_DIR$/src/views/Roles/Roles.js" />
+        <option value="$PROJECT_DIR$/src/views/Groups/Groups.js" />
       </list>
     </option>
   </component>
@@ -144,23 +156,20 @@
             <path>
               <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
               <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
               <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="IDM" type="b2602c69:ProjectViewProjectNode" />
               <item name="IDM" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-              <item name="avatars" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="Groups" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -216,7 +225,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24652000" />
+    <option name="totallyTimeSpent" value="24932000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="962" extended-state="6" />
@@ -501,16 +510,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/Groups/Groups.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="332" column="38" selection-start-line="332" selection-start-column="38" selection-end-line="332" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/DefaultLayout/DefaultAside.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -553,8 +552,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/Roles/Roles.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="355" column="91" selection-start-line="355" selection-start-column="91" selection-end-line="355" selection-end-column="91" />
+        <state relative-caret-position="334">
+          <caret line="346" column="41" lean-forward="true" selection-start-line="343" selection-start-column="36" selection-end-line="346" selection-end-column="41" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
             <element signature="e#583#888#0" />
@@ -566,6 +565,17 @@
             <element signature="e#4258#4599#0" />
             <element signature="e#4625#4998#0" />
             <element signature="e#7024#9072#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/Groups/Groups.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="373" column="28" selection-start-line="373" selection-start-column="31" selection-end-line="419" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+            <element signature="e#7025#8854#0" />
           </folding>
         </state>
       </provider>
