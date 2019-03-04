@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities'
-import {GroupsService, RolesService, UsersService} from "../../services";
+import {GroupsService, RolesService, UsersService, ProvidersService} from "../../services";
 
 
 const brandPrimary = getStyle('--primary')
@@ -211,18 +211,24 @@ const cardChartOpts4 = {
     },
 };
 
+const emptyGroupObj = {
+    name: "",
+    service: ''
+}
 
 class Groups extends Component {
     constructor(props) {
         super(props);
 
+
         this.state = {
             users: [],
-            selectedGroup: {},
-            selectedUserGroups: [],
-            selectedUserRoles: [],
+            roles: [],
             groups: [],
-            roles: []
+            services: [],
+            selectedGroup: emptyGroupObj,
+           // selectedGroupUsers: [],
+
         };
     }
 
@@ -230,6 +236,7 @@ class Groups extends Component {
         this.getUsers();
         this.getGroups();
         this.getRoles();
+        this.getServices();
     }
 
     getUsers = async () => {
@@ -266,26 +273,77 @@ class Groups extends Component {
         }
     }
 
-    selectGroup = (user) => {
+    getServices = async () => {
+        try {
+            const response = await ProvidersService.get();
+            this.setState({
+                services: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    selectGroup = (gr) => {
         this.setState({
-            selectedUser: Object.assign({}, user)
+            selectedGroup: Object.assign({}, gr)
         })
     }
 
-    updateUserRoles = (allRoles, selectedRole) => {
-        this.setState(prevState => ({
-            selectedUserRoles: [...prevState.selectedUserRoles, selectedRole]
-        }))
+    selectService = (selectedService) => {
+        let selectedGroup = Object.assign({}, this.state.selectedGroup);
+        selectedGroup.service = selectedService;
+        this.setState({selectedGroup});
     }
 
-    updateUserGroups = (allGroups, selectedgGroup) => {
-        this.setState(prevState => ({
-            selectedUserGroups: [...prevState.selectedUserGroups, selectedgGroup]
-        }))
+    addNewGroup = () => {
+        this.setState({
+            selectedGroup: Object.assign({}, emptyGroupObj)
+        })
+    }
+
+    handleInputGroupNameChange = (e) => {
+        let selectedGroup = Object.assign({}, this.state.selectedGroup);
+        selectedGroup.name = e.target.value;
+        this.setState({selectedGroup});
+    }
+
+    saveGroupChanges = async (group) => {
+        try {
+            const response = group.id ? GroupsService.update(group.id, group) : await GroupsService.add(group);
+            this.getGroups();
+            console.log('Group successfully created/updated', response)
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    saveGroup = () => {
+        const {selectedGroup} = this.state;
+        let groupObj = {
+            "name": selectedGroup.name,
+            "serviceId": selectedGroup.service.id
+        }
+        if (selectedGroup.id) { // edit
+            groupObj.id = selectedGroup.id;
+        }
+        this.saveGroupChanges(groupObj);
+        this.addNewGroup(); //reset form
+    }
+
+    deleteGroup = async () => {
+        try {
+            const response = await GroupsService.delete(this.state.selectedGroup.id);
+            this.getGroups();
+            this.addNewGroup(); //reset form
+            console.log('Group successfully deleted', response)
+        } catch (error) {
+            console.error('error', error);
+        }
     }
 
     render() {
-        const {users, selectedGroup, groups, roles, selectedUserGroups, selectedUserRoles} = this.state;
+        const {users, selectedGroup, groups, roles, services} = this.state;
 
         return (
 
@@ -295,7 +353,9 @@ class Groups extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-primary">
                             <CardBody className="pb-0">
-                                <div className="text-value"><small>Total users:</small> {users.length}</div>
+                                <div className="text-value">
+                                    <small>Total users:</small>
+                                    {users.length}</div>
                             </CardBody>
                             <div className="chart-wrapper mx-3" style={{height: '70px'}}>
                                 <Line data={cardChartData1} options={cardChartOpts1} height={70}/>
@@ -306,7 +366,9 @@ class Groups extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-danger">
                             <CardBody className="pb-0">
-                                <div className="text-value"><small>Total roles:</small> {roles.length}</div>
+                                <div className="text-value">
+                                    <small>Total roles:</small>
+                                    {roles.length}</div>
                             </CardBody>
                             <div className="chart-wrapper mx-3" style={{height: '70px'}}>
                                 <Bar data={cardChartData4} options={cardChartOpts4} height={70}/>
@@ -317,7 +379,9 @@ class Groups extends Component {
                     <Col xs="12" sm="4" lg="4">
                         <Card className="text-white bg-warning">
                             <CardBody className="pb-0">
-                                <div className="text-value"><small>Total groups:</small> {groups.length}</div>
+                                <div className="text-value">
+                                    <small>Total groups:</small>
+                                    {groups.length}</div>
                             </CardBody>
                             <div className="chart-wrapper" style={{height: '70px'}}>
                                 <Line data={cardChartData3} options={cardChartOpts3} height={70}/>
@@ -331,30 +395,32 @@ class Groups extends Component {
                         <Card>
                             <CardHeader>
                                 Groups
+                                <button className="btn btn-outline-primary btn-block btn-sm col-2 float-right"
+                                        onClick={this.addNewRole}>Add new</button>
                             </CardHeader>
                             <CardBody>
                                 <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
                                     <thead className="thead-light">
                                     <tr>
                                         <th className="text-center"><i className="icon-list"></i></th>
-                                        <th>Role</th>
+                                        <th>Groups</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {groups.map(group =>
-                                        <tr key={group.id}
-                                            className={selectedGroup.id === group.id ? 'selected-user-row' : null}
-                                            onClick={() => this.selectedGroup(group)}>
+                                    {groups.map(gr =>
+                                        <tr key={gr.id}
+                                            className={selectedGroup.id === gr.id ? 'selected-user-row' : null}
+                                            onClick={() => this.selectGroup(gr)}>
                                             <td className="text-center">
                                                 <div className="avatar">
-                                                    <img src={'assets/img/avatars/1.jpg'} className="img-avatar"
+                                                    <img src={'assets/img/avatars/role.jpeg'} className="img-avatar"
                                                          alt="admin@bootstrapmaster.com"/>
                                                 </div>
                                             </td>
                                             <td>
-                                                <div>{group.name || '-'}</div>
+                                                <div>{gr.name || '-'}</div>
                                                 <div className="small text-muted">
-                                                    Id: {group.id}
+                                                    Id: {gr.id}
                                                 </div>
                                             </td>
                                         </tr>
@@ -369,55 +435,73 @@ class Groups extends Component {
                     <Col xs="12" sm="6" lg="6">
                         <Card>
                             <CardHeader>
-                                Add group
+                                Group settings
                             </CardHeader>
-                            {/*<CardBody>*/}
-                                {/*<div className="card">*/}
-                                    {/*<div className="card-header"><strong>{selectedUser.username}</strong>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="card-body">*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-12">*/}
-                                                {/*<div className="position-relative form-group">*/}
-                                                    {/*<label htmlFor="roles" className="">Roles</label>*/}
-                                                    {/*<Select*/}
-                                                        {/*value={selectedUserRoles}*/}
-                                                        {/*onChange={(item, opt) => this.updateUserRoles(item, opt.option)}*/}
-                                                        {/*options={roles}*/}
-                                                        {/*getOptionValue={(item) => item.id}*/}
-                                                        {/*getOptionLabel={(item) => item.name}*/}
-                                                        {/*isMulti*/}
-                                                    {/*/></div>*/}
-                                            {/*</div>*/}
+
+                            <CardBody>
+                                <div className="card">
+                                    <div className="card-header">
+                                        <strong>{selectedGroup.id ? `Edit "${selectedGroup.name}" group` : "Add new group"}</strong>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="name" className="">Name</label>
+                                                    <input id="name" placeholder="Enter group name"
+                                                           type="text" className="form-control"
+                                                           value={selectedGroup.name}
+                                                           onChange={this.handleInputGroupNameChange}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="services" className="">Service</label>
+                                                    <Select
+                                                        value={selectedGroup.service}
+                                                        onChange={(item) => this.selectService(item)}
+                                                        options={services}
+                                                        getOptionValue={(item) => item.id}
+                                                        getOptionLabel={(item) => item.name}
+                                                    /></div>
+                                            </div>
+                                        </div>
+                                        {/*{selectedGroup.id && (<div className="row">*/}
+                                        {/*<div className="col-12">*/}
+                                        {/*<div className="position-relative form-group">*/}
+                                        {/*<label htmlFor="groups" className="">Users</label>*/}
+                                        {/*<Select*/}
+                                        {/*value={selectedUserGroups}*/}
+                                        {/*//modify this*/}
+                                        {/*onChange={(item, opt) => this.updateUserGroups(item, opt.option)}*/}
+                                        {/*options={users}*/}
+                                        {/*getOptionValue={(item) => item.id}*/}
+                                        {/*getOptionLabel={(item) => item.username}*/}
+                                        {/*isMulti*/}
+                                        {/*/></div>*/}
                                         {/*</div>*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-12">*/}
-                                                {/*<div className="position-relative form-group">*/}
-                                                    {/*<label htmlFor="groups" className="">Groups</label>*/}
-                                                    {/*<Select*/}
-                                                        {/*value={selectedUserGroups}*/}
-                                                        {/*onChange={(item, opt) => this.updateUserGroups(item, opt.option)}*/}
-                                                        {/*options={groups}*/}
-                                                        {/*getOptionValue={(item) => item.id}*/}
-                                                        {/*getOptionLabel={(item) => item.name}*/}
-                                                        {/*isMulti*/}
-                                                    {/*/></div>*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-4">*/}
-                                                {/*<small className="text-info">Changes are automatically saved</small>*/}
-                                            {/*</div>*/}
-                                            {/*<div className="col-8">*/}
-                                                {/*<div className="position-relative form-group col-3 float-md-right p-0">*/}
-                                                    {/*<button aria-pressed="true" className="btn btn-danger btn-block active btn-sm">Delete*/}
-                                                    {/*</button>*/}
-                                                {/*</div>*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</CardBody>*/}
+                                        {/*</div>)}*/}
+                                        <div className="row">
+                                            <div className="col-12 flex-grow-0">
+                                                <div className="position-relative form-group editor-buttons">
+                                                    <div>
+                                                        <button className="btn btn-success btn-block btn-sm"
+                                                                onClick={this.saveGroup}>Save
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button className="btn btn-danger btn-block btn-sm"
+                                                                onClick={this.deleteGroup}>Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardBody>
                         </Card>
                     </Col>
                 </Row>
