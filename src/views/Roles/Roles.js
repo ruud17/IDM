@@ -296,12 +296,6 @@ class Roles extends Component {
         this.setState({selectedRole});
     }
 
-    updateUserGroups = (allGroups, selectedGroup) => {
-        this.setState(prevState => ({
-            selectedUserGroups: [...prevState.selectedUserGroups, selectedGroup]
-        }))
-    }
-
     addNewRole = () => {
         this.setState({
             selectedRole: Object.assign({}, emptyRoleObj)
@@ -341,6 +335,7 @@ class Roles extends Component {
         try {
             const response = await RolesService.delete(this.state.selectedRole.id);
             this.getRoles();
+            this.addNewRole(); //reset form
             console.log('Role successfully deleted', response)
         } catch (error) {
             console.error('error', error);
@@ -473,21 +468,21 @@ class Roles extends Component {
                                                     /></div>
                                             </div>
                                         </div>
-                                        {selectedRole.id && (<div className="row">
-                                            <div className="col-12">
-                                                <div className="position-relative form-group">
-                                                    <label htmlFor="groups" className="">Users</label>
-                                                    <Select
-                                                        value={selectedUserGroups}
-                                                        //modify this
-                                                        onChange={(item, opt) => this.updateUserGroups(item, opt.option)}
-                                                        options={users}
-                                                        getOptionValue={(item) => item.id}
-                                                        getOptionLabel={(item) => item.username}
-                                                        isMulti
-                                                    /></div>
-                                            </div>
-                                        </div>)}
+                                        {/*{selectedRole.id && (<div className="row">*/}
+                                        {/*<div className="col-12">*/}
+                                        {/*<div className="position-relative form-group">*/}
+                                        {/*<label htmlFor="groups" className="">Users</label>*/}
+                                        {/*<Select*/}
+                                        {/*value={selectedUserGroups}*/}
+                                        {/*//modify this*/}
+                                        {/*onChange={(item, opt) => this.updateUserGroups(item, opt.option)}*/}
+                                        {/*options={users}*/}
+                                        {/*getOptionValue={(item) => item.id}*/}
+                                        {/*getOptionLabel={(item) => item.username}*/}
+                                        {/*isMulti*/}
+                                        {/*/></div>*/}
+                                        {/*</div>*/}
+                                        {/*</div>)}*/}
                                         <div className="row">
                                             <div className="col-12 flex-grow-0">
                                                 <div className="position-relative form-group editor-buttons">
@@ -497,7 +492,8 @@ class Roles extends Component {
                                                         </button>
                                                     </div>
                                                     <div>
-                                                        <button className="btn btn-danger btn-block btn-sm" onClick={this.deleteRole}>Delete
+                                                        <button className="btn btn-danger btn-block btn-sm"
+                                                                onClick={this.deleteRole}>Delete
                                                         </button>
                                                     </div>
                                                 </div>
