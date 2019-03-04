@@ -4,7 +4,7 @@ export default {
     {
       name: 'Users',
       url: '/users',
-      icon: 'icon-user',
+      icon: 'icon-people',
     },
     {
       name: 'Roles',
