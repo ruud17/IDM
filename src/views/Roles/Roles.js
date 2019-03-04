@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import {CustomTooltips} from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import {getStyle, hexToRgba} from '@coreui/coreui/dist/js/coreui-utilities'
-import {GroupsService, RolesService, UsersService} from "../../services";
+import {GroupsService, RolesService, UsersService, ProvidersService} from "../../services";
 
 
 const brandPrimary = getStyle('--primary')
@@ -211,18 +211,24 @@ const cardChartOpts4 = {
     },
 };
 
+const emptyRoleObj = {
+    name: "",
+    service: ''
+}
 
 class Roles extends Component {
     constructor(props) {
         super(props);
 
+
         this.state = {
             users: [],
-            selectedRole: {},
-            selectedUserGroups: [],
-            selectedUserRoles: [],
+            roles: [],
             groups: [],
-            roles: []
+            services: [],
+            selectedRole: emptyRoleObj,
+            selectedRoleUsers: [],
+
         };
     }
 
@@ -230,6 +236,7 @@ class Roles extends Component {
         this.getUsers();
         this.getGroups();
         this.getRoles();
+        this.getServices();
     }
 
     getUsers = async () => {
@@ -266,26 +273,82 @@ class Roles extends Component {
         }
     }
 
+    getServices = async () => {
+        try {
+            const response = await ProvidersService.get();
+            this.setState({
+                services: Object.assign([], response.data)
+            })
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
     selectRole = (user) => {
         this.setState({
             selectedRole: Object.assign({}, user)
         })
     }
 
-    updateUserRoles = (allRoles, selectedRole) => {
+    selectService = (selectedService) => {
+        let selectedRole = Object.assign({}, this.state.selectedRole);
+        selectedRole.service = selectedService;
+        this.setState({selectedRole});
+    }
+
+    updateUserGroups = (allGroups, selectedGroup) => {
         this.setState(prevState => ({
-            selectedUserRoles: [...prevState.selectedUserRoles, selectedRole]
+            selectedUserGroups: [...prevState.selectedUserGroups, selectedGroup]
         }))
     }
 
-    updateUserGroups = (allGroups, selectedgGroup) => {
-        this.setState(prevState => ({
-            selectedUserGroups: [...prevState.selectedUserGroups, selectedgGroup]
-        }))
+    addNewRole = () => {
+        this.setState({
+            selectedRole: Object.assign({}, emptyRoleObj)
+        })
+    }
+
+    handleInputRoleNameChange = (e) => {
+        let selectedRole = Object.assign({}, this.state.selectedRole);
+        selectedRole.name = e.target.value;
+        this.setState({selectedRole});
+    }
+
+    saveRoleChanges = async (role) => {
+        try {
+            const response = role.id ? RolesService.update(role.id, role) : await RolesService.add(role);
+            this.getRoles();
+            console.log('Role successfully created/updated', response)
+        } catch (error) {
+            console.error('error', error);
+        }
+    }
+
+    saveRole = () => {
+        const {selectedRole} = this.state;
+        let roleObj = {
+            "name": selectedRole.name,
+            "serviceId": selectedRole.service.id
+        }
+        if (selectedRole.id) { // edit
+            roleObj.id = selectedRole.id;
+        }
+        this.saveRoleChanges(roleObj);
+        this.addNewRole(); //reset form
+    }
+
+    deleteRole = async () => {
+        try {
+            const response = await RolesService.delete(this.state.selectedRole.id);
+            this.getRoles();
+            console.log('Role successfully deleted', response)
+        } catch (error) {
+            console.error('error', error);
+        }
     }
 
     render() {
-        const {users, selectedRole, groups, roles, selectedUserGroups, selectedUserRoles} = this.state;
+        const {users, selectedRole, groups, roles, selectedUserGroups, services} = this.state;
 
         return (
 
@@ -337,6 +400,8 @@ class Roles extends Component {
                         <Card>
                             <CardHeader>
                                 Roles
+                                <button className="btn btn-outline-primary btn-block btn-sm col-2 float-right"
+                                        onClick={this.addNewRole}>Add new</button>
                             </CardHeader>
                             <CardBody>
                                 <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
@@ -375,56 +440,72 @@ class Roles extends Component {
                     <Col xs="12" sm="6" lg="6">
                         <Card>
                             <CardHeader>
-                                Add role
+                                Role settings
                             </CardHeader>
-                            {/*<CardBody>*/}
-                                {/*<div className="card">*/}
-                                    {/*<div className="card-header"><strong>{selectedUser.username}</strong>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="card-body">*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-12">*/}
-                                                {/*<div className="position-relative form-group">*/}
-                                                    {/*<label htmlFor="roles" className="">Roles</label>*/}
-                                                    {/*<Select*/}
-                                                        {/*value={selectedUserRoles}*/}
-                                                        {/*onChange={(item, opt) => this.updateUserRoles(item, opt.option)}*/}
-                                                        {/*options={roles}*/}
-                                                        {/*getOptionValue={(item) => item.id}*/}
-                                                        {/*getOptionLabel={(item) => item.name}*/}
-                                                        {/*isMulti*/}
-                                                    {/*/></div>*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-12">*/}
-                                                {/*<div className="position-relative form-group">*/}
-                                                    {/*<label htmlFor="groups" className="">Groups</label>*/}
-                                                    {/*<Select*/}
-                                                        {/*value={selectedUserGroups}*/}
-                                                        {/*onChange={(item, opt) => this.updateUserGroups(item, opt.option)}*/}
-                                                        {/*options={groups}*/}
-                                                        {/*getOptionValue={(item) => item.id}*/}
-                                                        {/*getOptionLabel={(item) => item.name}*/}
-                                                        {/*isMulti*/}
-                                                    {/*/></div>*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                        {/*<div className="row">*/}
-                                            {/*<div className="col-4">*/}
-                                                {/*<small className="text-info">Changes are automatically saved</small>*/}
-                                            {/*</div>*/}
-                                            {/*<div className="col-8">*/}
-                                                {/*<div className="position-relative form-group col-3 float-md-right p-0">*/}
-                                                    {/*<button aria-pressed="true"*/}
-                                                            {/*className="btn btn-danger btn-block active btn-sm">Delete*/}
-                                                    {/*</button>*/}
-                                                {/*</div>*/}
-                                            {/*</div>*/}
-                                        {/*</div>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</CardBody>*/}
+
+                            <CardBody>
+                                <div className="card">
+                                    <div className="card-header">
+                                        <strong>{selectedRole.id ? `Edit "${selectedRole.name}" role` : "Add new role"}</strong>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="name" className="">Name</label>
+                                                    <input id="name" placeholder="Enter role name"
+                                                           type="text" className="form-control"
+                                                           value={selectedRole.name}
+                                                           onChange={this.handleInputRoleNameChange}/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="roles" className="">Service</label>
+                                                    <Select
+                                                        value={selectedRole.service}
+                                                        onChange={(item) => this.selectService(item)}
+                                                        options={services}
+                                                        getOptionValue={(item) => item.id}
+                                                        getOptionLabel={(item) => item.name}
+                                                    /></div>
+                                            </div>
+                                        </div>
+                                        {selectedRole.id && (<div className="row">
+                                            <div className="col-12">
+                                                <div className="position-relative form-group">
+                                                    <label htmlFor="groups" className="">Users</label>
+                                                    <Select
+                                                        value={selectedUserGroups}
+                                                        //modify this
+                                                        onChange={(item, opt) => this.updateUserGroups(item, opt.option)}
+                                                        options={users}
+                                                        getOptionValue={(item) => item.id}
+                                                        getOptionLabel={(item) => item.username}
+                                                        isMulti
+                                                    /></div>
+                                            </div>
+                                        </div>)}
+                                        <div className="row">
+                                            <div className="col-12 flex-grow-0">
+                                                <div className="position-relative form-group editor-buttons">
+                                                    <div>
+                                                        <button className="btn btn-success btn-block btn-sm"
+                                                                onClick={this.saveRole}>Save
+                                                        </button>
+                                                    </div>
+                                                    <div>
+                                                        <button className="btn btn-danger btn-block btn-sm" onClick={this.deleteRole}>Delete
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardBody>
                         </Card>
                     </Col>
                 </Row>

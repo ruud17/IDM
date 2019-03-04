@@ -427,7 +427,7 @@ class Users extends Component {
                                             <div className="col-8">
                                                 <div className="position-relative form-group col-3 float-md-right p-0">
                                                     <button aria-pressed="true"
-                                                            className="btn btn-danger btn-block active btn-sm">Delete
+                                                            className="btn btn-danger btn-block btn-sm">Delete
                                                     </button>
                                                 </div>
                                             </div>

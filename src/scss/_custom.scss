@@ -1,3 +1,13 @@
 .selected-user-row{
   background-color: rgba(0,0,0,.06)
 }
+
+.editor-buttons{
+  display: flex;
+  justify-content: space-between;
+
+  >div{
+    padding-right: 5px;
+    margin-top: 0;
+  }
+}
