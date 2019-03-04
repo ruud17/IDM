@@ -414,7 +414,7 @@ class Groups extends Component {
                                             onClick={() => this.selectGroup(gr)}>
                                             <td className="text-center">
                                                 <div className="avatar">
-                                                    <img src={'assets/img/avatars/role.jpeg'} className="img-avatar"
+                                                    <img src={'assets/img/avatars/users.png'} className="img-avatar"
                                                          alt="admin@bootstrapmaster.com"/>
                                                 </div>
                                             </td>
